@@ -1,0 +1,1804 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Human Weapon OS — Watch 4 Classic & Android Edition</title>
+<style>
+:root {
+  --bg: #0a0c10;
+  --panel: #10151d;
+  --panel2: #161d28;
+  --line: #232c3a;
+  --text: #e7ebf2;
+  --dim: #8892a3;
+  --gold: #c9a227;
+  --gold2: #e8c65a;
+  --green: #3fb950;
+  --red: #f0544c;
+  --cyan: #4ea8de;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 14px/1.55 system-ui, "Segoe UI", Roboto, Arial, sans-serif;
+}
+header {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  background: rgba(10, 12, 16, 0.94);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+}
+.hdwrap {
+  max-width: 1080px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 16px 6px;
+}
+.brand {
+  font-weight: 800;
+  letter-spacing: 3px;
+  font-size: 15px;
+}
+.brand span { color: var(--gold); }
+.hdright {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.pill {
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  padding: 4px 12px;
+  border-radius: 999px;
+  color: var(--gold2);
+  font-size: 12px;
+  white-space: nowrap;
+}
+.pill.watch {
+  border-color: #204560;
+  color: var(--cyan);
+}
+nav {
+  max-width: 1080px;
+  margin: 0 auto;
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 6px 12px 10px;
+}
+nav button {
+  flex: 0 0 auto;
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--dim);
+  padding: 6px 13px;
+  border-radius: 999px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+}
+nav button:hover { color: var(--text); }
+nav button.on {
+  background: var(--panel2);
+  border-color: var(--line);
+  color: var(--gold2);
+  font-weight: 600;
+}
+main {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 18px 16px 80px;
+}
+.grid { display: grid; gap: 14px; margin-bottom: 14px; }
+.g2 { grid-template-columns: 1fr 1fr; }
+.g3 { grid-template-columns: 1fr 1fr 1fr; }
+.g4 { grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 840px) {
+  .g2, .g3, .g4 { grid-template-columns: 1fr; }
+}
+.card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 14px;
+}
+.grid .card { margin-bottom: 0; }
+.card h3 {
+  margin: 0 0 12px;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--dim);
+  font-weight: 700;
+}
+.score-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.big {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--gold2);
+}
+.dim { color: var(--dim); font-size: 12px; }
+.small { font-size: 12px; }
+.gold { color: var(--gold2); }
+.cyan { color: var(--cyan); }
+.progress {
+  height: 10px;
+  background: #0c1017;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.progress i {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #8a6d12, var(--gold2));
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+.ring {
+  width: 132px;
+  height: 132px;
+  display: block;
+  margin: 0 auto;
+}
+.ringbg { fill: none; stroke: #1b2432; stroke-width: 10; }
+.ringfg {
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 10;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.4s ease;
+}
+.ringpct {
+  fill: var(--text);
+  font-size: 24px;
+  font-weight: 800;
+  text-anchor: middle;
+}
+.ringsub {
+  fill: var(--dim);
+  font-size: 10.5px;
+  text-anchor: middle;
+}
+.date-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+input[type="date"], input[type="text"], input[type="number"], select, textarea {
+  background: #0c1017;
+  border: 1px solid var(--line);
+  color: var(--text);
+  border-radius: 9px;
+  padding: 7px 10px;
+  font: inherit;
+  font-size: 13px;
+}
+input:focus, select:focus, textarea:focus {
+  outline: 1px solid var(--gold);
+  border-color: var(--gold);
+}
+.ghead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 16px 0 8px;
+}
+.ghead b {
+  letter-spacing: 1px;
+  font-size: 12px;
+  text-transform: uppercase;
+  color: var(--gold2);
+}
+.task {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: var(--panel2);
+  margin-bottom: 6px;
+}
+label.task { cursor: pointer; user-select: none; }
+.task:hover { border-color: var(--gold); }
+.task.done {
+  border-color: #3c3416;
+  background: #151508;
+}
+.task.done .tl {
+  color: var(--dim);
+  text-decoration: line-through;
+}
+.tl { flex: 1; }
+input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--gold);
+  cursor: pointer;
+}
+.btn-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+.btn {
+  background: var(--panel2);
+  border: 1px solid var(--line);
+  color: var(--text);
+  padding: 7px 13px;
+  border-radius: 9px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+}
+.btn:hover {
+  border-color: var(--gold);
+  color: var(--gold2);
+}
+.btn.goldbtn {
+  background: linear-gradient(180deg, var(--gold2), var(--gold));
+  color: #141414;
+  border-color: var(--gold);
+  font-weight: 700;
+}
+.btn.ghost { background: transparent; }
+.btn.danger { color: var(--red); border-color: #5b2320; }
+.btn.sm { padding: 4px 9px; font-size: 11px; border-radius: 7px; }
+.arow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid #1a222e;
+  font-size: 13px;
+}
+.arow:last-child { border-bottom: 0; }
+.amain { flex: 1; min-width: 0; }
+.amain b { display: block; font-weight: 600; }
+.amain span { color: var(--dim); font-size: 12px; }
+.abtns { display: flex; gap: 4px; flex: 0 0 auto; }
+table.tbl { width: 100%; border-collapse: collapse; }
+.tbl td, .tbl th {
+  border-bottom: 1px solid #1a222e;
+  padding: 7px 8px;
+  text-align: left;
+  font-size: 13px;
+  vertical-align: top;
+}
+.tbl th {
+  color: var(--dim);
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+.tbl td.tm {
+  color: var(--gold2);
+  white-space: nowrap;
+  font-weight: 600;
+}
+ul.plain { list-style: none; margin: 0; padding: 0; }
+ul.plain li {
+  padding: 7px 0 7px 20px;
+  position: relative;
+  border-bottom: 1px dashed #1b2330;
+  font-size: 13px;
+}
+ul.plain li:last-child { border-bottom: 0; }
+ul.plain li:before {
+  content: "\25B8";
+  position: absolute;
+  left: 2px;
+  color: var(--gold);
+}
+.warn {
+  border-left: 3px solid var(--red);
+  background: #1a1214;
+  padding: 10px 13px;
+  border-radius: 8px;
+  font-size: 13px;
+  margin-bottom: 12px;
+}
+.note {
+  border-left: 3px solid var(--gold);
+  background: #15130a;
+  padding: 10px 13px;
+  border-radius: 8px;
+  font-size: 13px;
+}
+.bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 125px;
+}
+.bar {
+  flex: 1;
+  min-height: 3px;
+  background: linear-gradient(180deg, var(--gold2), #7a5e10);
+  border-radius: 3px 3px 0 0;
+}
+.barlabels {
+  display: flex;
+  gap: 4px;
+  margin-top: 5px;
+}
+.barlabels span {
+  flex: 1;
+  text-align: center;
+  font-size: 10px;
+  color: var(--dim);
+}
+.heat {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+.cell {
+  aspect-ratio: 1;
+  border-radius: 6px;
+  border: 1px solid #1e2734;
+}
+.cell.none { background: transparent; border-style: dashed; opacity: 0.45; }
+.cell.l1 { background: rgba(201, 162, 39, 0.18); }
+.cell.l2 { background: rgba(201, 162, 39, 0.36); }
+.cell.l3 { background: rgba(201, 162, 39, 0.58); }
+.cell.l4 { background: rgba(201, 162, 39, 0.8); }
+.cell.l5 { background: var(--gold2); border-color: var(--gold2); }
+.legend {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+  font-size: 11px;
+}
+.legend .cell { width: 13px; height: 13px; aspect-ratio: auto; }
+.metric {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 0;
+  border-bottom: 1px solid #1a222e;
+}
+.metric label { flex: 1; font-size: 13px; }
+.metric input { width: 88px; }
+.frow { margin-top: 12px; }
+.frow label {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-bottom: 5px;
+}
+.frow input, .frow select, .frow textarea { width: 100%; }
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(4, 6, 9, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 16px;
+}
+.overlay.hidden { display: none; }
+.modal {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  width: 100%;
+  max-width: 620px;
+  max-height: 88vh;
+  overflow: auto;
+  padding: 18px;
+}
+.modhead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.mfoot {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 14px;
+}
+#toast {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 340px;
+}
+.toast {
+  background: var(--panel2);
+  border: 1px solid var(--gold);
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 13px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+.report {
+  background: #fff;
+  color: #000;
+  padding: 18px;
+  border-radius: 10px;
+}
+.report h2 { margin: 0 0 4px; font-size: 18px; }
+.report table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+.report th, .report td {
+  border: 1px solid #999;
+  padding: 4px 7px;
+  font-size: 12px;
+  text-align: left;
+}
+.report th { background: #eee; }
+.watch-stat {
+  background: var(--panel2);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 12px;
+}
+.watch-stat .lbl {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+.watch-stat .val {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--cyan);
+  margin-top: 4px;
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="hdwrap">
+    <div class="brand">HUMAN WEAPON <span>OS</span></div>
+    <div class="hdright">
+      <span id="hdWatchStatus" class="pill watch">&#8986; Watch 4 Classic (EEPD)</span>
+      <span id="hdDate" class="dim"></span>
+      <span id="hdStreak" class="pill"></span>
+    </div>
+  </div>
+  <nav id="tabs"></nav>
+</header>
+
+<main>
+  <div class="card">
+    <h3>Active Log Date</h3>
+    <div class="date-bar">
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+        <button class="btn" onclick="shiftDate(-1)">&#8592; Prev Day</button>
+        <input type="date" id="datePicker" onchange="setCheckDate(this.value)">
+        <button class="btn" onclick="shiftDate(1)">Next Day &#8594;</button>
+        <button class="btn ghost" onclick="setCheckDate(todayStr())">Jump to Today</button>
+        <button class="btn goldbtn" onclick="syncSamsungHealth()">&#8635; Sync Galaxy Watch 4 Classic</button>
+      </div>
+      <span class="dim" id="dateStatus"></span>
+    </div>
+  </div>
+
+  <div class="grid g3">
+    <div class="card">
+      <h3>Habit Progress</h3>
+      <svg class="ring" viewBox="0 0 120 120">
+        <circle class="ringbg" cx="60" cy="60" r="52"></circle>
+        <circle id="ringCircle" class="ringfg" cx="60" cy="60" r="52" stroke-dasharray="326.7" stroke-dashoffset="326.7" transform="rotate(-90 60 60)"></circle>
+        <text id="pctText" class="ringpct" x="60" y="57">0%</text>
+        <text id="countText" class="ringsub" x="60" y="75">0 / 0 habits</text>
+      </svg>
+      <div class="progress" style="margin-top:10px"><i id="progBar" style="width: 0%"></i></div>
+      <div class="btn-row" style="justify-content:center">
+        <button class="btn" onclick="markAll(true)">Check All</button>
+        <button class="btn ghost" onclick="markAll(false)">Reset Today</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Hydration Tracker</h3>
+      <div class="score-row">
+        <div class="big"><span id="waterText">0</span> <span class="dim" id="waterGoalLabel">/ 3000 ml</span></div>
+        <div class="dim" id="waterPctText">0%</div>
+      </div>
+      <div class="progress"><i id="waterBar" style="width: 0%"></i></div>
+      <div class="btn-row">
+        <button class="btn" onclick="addWater(250)">+250 ml</button>
+        <button class="btn" onclick="addWater(500)">+500 ml</button>
+        <button class="btn ghost" onclick="resetWater()">Reset Water</button>
+      </div>
+      <div class="dim" style="margin-top:10px">Next reminder in <b id="remCount">60 min</b> · room temp only</div>
+    </div>
+
+    <div class="card">
+      <h3>Today's Training</h3>
+      <div class="big" id="dashWoDay">Day A</div>
+      <div class="dim" id="dashWoLabel"></div>
+      <div style="margin-top:10px;font-size:13px" id="dashWoProgress"></div>
+      <div class="btn-row">
+        <button class="btn" onclick="go('training')">Open Training</button>
+        <button class="btn ghost" onclick="go('checkin')">Open Check-in</button>
+        <button class="btn ghost" onclick="go('watch')">Watch Sync</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab-Specific Content View -->
+  <div id="tabView"></div>
+
+  <!-- Persistent Habit Checklist -->
+  <div class="card" id="checklistCard">
+    <h3>Daily Habit Checklist (28 Habits across 5 Groups)</h3>
+    <div id="habitList"></div>
+  </div>
+</main>
+
+<div id="toast"></div>
+<div id="ov" class="overlay hidden" onclick="if(event.target===this)closeModal()"></div>
+
+<script>
+"use strict";
+
+var TABS = [
+  ["dashboard", "Dashboard"],
+  ["watch", "Watch Sync"],
+  ["routine", "Routine"],
+  ["diet", "Diet"],
+  ["training", "Training"],
+  ["voice", "Voice"],
+  ["checkin", "Check-in"],
+  ["insights", "Insights"],
+  ["admin", "Admin"],
+  ["data", "Data"]
+];
+
+var DOW = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+var SCHED = ["R", "A", "B", "C", "D", "A", "B"];
+
+var SHIVA = [
+  "Stillness before action. The storm is inside; the surface stays flat.",
+  "You are a 1-man army. You don't need motivation, company, or noise — you need a system and a spine.",
+  "Detached from outcome, obsessive about process. Do the work fully; release the result completely.",
+  "Solitude is not loneliness. It is the dojo.",
+  "Anger is fuel, never the driver. Cool head, precise strike.",
+  "Brahmacharya is not suppression — it is redirection into study, training, voice, craft."
+];
+
+var SPINE_SETUP = [
+  "Sit on a firm cushion 3-5 cm thick — not thicker.",
+  "Hips slightly higher than knees (restores lumbar lordosis).",
+  "Back against a wall for support initially.",
+  "Laptop screen at EYE LEVEL — stack books or boxes under it.",
+  "External keyboard + mouse so hands rest at elbow height.",
+  "Alternate cross-legged and kneeling every 15 minutes."
+];
+
+var SPINE_RESET = [
+  "Chin Tucks — 8-12 reps, 5-second hold",
+  "Pelvic Tilts — 10 slow reps",
+  "Doorway Chest Stretch — 30 seconds",
+  "Wall Angels — 10 slow reps",
+  "Band Face Pulls — 3 x 15",
+  "Band Pull-Aparts — 3 x 20"
+];
+
+var HUBERMAN = [
+  "Morning sunlight: 10-30 min within 1 hour of waking, no sunglasses.",
+  "Cold shower finish: 30-60 s cold at the end — boosts baseline dopamine.",
+  "Delay caffeine 90-120 min after waking so adenosine clears first.",
+  "Deep work in 90-minute blocks with visual focus on one point.",
+  "NSDR 10-20 min after the last study block — cements learning.",
+  "Sleep by 22:00 — 8 hours. Neuroplasticity consolidates in sleep."
+];
+
+var DIET_RULES = [
+  "Turmeric + black pepper with every cooked meal — anti-inflammatory.",
+  "Ginger in breakfast clears mucus (sinusitis).",
+  "No refined sugar — festivals: one small sweet, nothing more.",
+  "No deep-fried food — even festivals.",
+  "No dairy at night (stops after 18:00 milk time).",
+  "No ice-cold water — room temperature only.",
+  "Soya chunks lower LDL — keep them in rotation."
+];
+
+function defaultHabits() {
+  return [
+    { id: "h_wake", group: "Morning", name: "Wake 6 AM" },
+    { id: "h_watersalt", group: "Morning", name: "Water + salt" },
+    { id: "h_training", group: "Morning", name: "Morning training" },
+    { id: "h_sunlight", group: "Morning", name: "Sunlight 10+ min" },
+    { id: "h_coldshower", group: "Morning", name: "Cold shower" },
+    { id: "h_bath", group: "Morning", name: "Bath" },
+    { id: "h_temple", group: "Morning", name: "Temple / chanting" },
+    { id: "h_breakfast", group: "Morning", name: "Breakfast" },
+    { id: "h_study1", group: "Deep Work", name: "Study block 1" },
+    { id: "h_spinereset", group: "Deep Work", name: "Spine reset breaks" },
+    { id: "h_study2", group: "Deep Work", name: "Study block 2" },
+    { id: "h_jobs", group: "Deep Work", name: "5 job applications" },
+    { id: "h_nsdr", group: "Deep Work", name: "NSDR 20 min" },
+    { id: "h_evening", group: "Evening", name: "Cardio / abs / forearms" },
+    { id: "h_milk", group: "Evening", name: "Milk time" },
+    { id: "h_walk", group: "Evening", name: "Evening walk" },
+    { id: "h_dinner", group: "Evening", name: "Dinner by 8:30" },
+    { id: "h_read", group: "Evening", name: "Read 1 hour" },
+    { id: "h_winddown", group: "Evening", name: "Wind down" },
+    { id: "h_hygiene", group: "Evening", name: "Night hygiene" },
+    { id: "h_sleep", group: "Evening", name: "Sleep by 10 PM" },
+    { id: "h_brahma", group: "Code", name: "Brahmacharya kept" },
+    { id: "h_noreels", group: "Code", name: "No reels / shorts" },
+    { id: "h_nosugar", group: "Code", name: "No refined sugar" },
+    { id: "h_nofried", group: "Code", name: "No deep-fried food" },
+    { id: "h_nodairy", group: "Code", name: "No dairy at night" },
+    { id: "h_nophone", group: "Code", name: "No phone before bed" },
+    { id: "h_voice", group: "Voice", name: "Voice training 10 min" }
+  ];
+}
+
+function defaultTimetable() {
+  return [
+    { time: "06:00", activity: "Wake up" },
+    { time: "06:00-06:15", activity: "Drink water + freshen up" },
+    { time: "06:15-08:00", activity: "Exercise - weight training + voice maxing" },
+    { time: "08:00-08:30", activity: "Meditation" },
+    { time: "08:30-09:00", activity: "Bath" },
+    { time: "09:00-09:30", activity: "Chanting & Temple" },
+    { time: "09:30-10:00", activity: "Breakfast" },
+    { time: "10:00-14:00", activity: "Study session 1" },
+    { time: "14:00-15:00", activity: "Rest & Lunch" },
+    { time: "15:00-16:00", activity: "Job battle - 5 applications + 5 LinkedIn connections" },
+    { time: "16:00-19:00", activity: "Study session 2" },
+    { time: "18:00", activity: "Milk time - 150-200 ml warm + turmeric + black pepper" },
+    { time: "19:00-20:00", activity: "Cardio, abs & forearms" },
+    { time: "20:00-20:30", activity: "Dinner" },
+    { time: "20:30-21:30", activity: "Study session 2 or reading" },
+    { time: "21:30-21:50", activity: "Brush teeth + facewash + legs wash" },
+    { time: "22:00", activity: "Sleep - 8 hours" }
+  ];
+}
+
+function defaultDiet() {
+  return [
+    { time: "06:00", title: "Warm water + turmeric + black pepper", detail: "First drink. Room temperature. Zero calories, starts the day clean." },
+    { time: "09:30", title: "Breakfast A - Oats stack", detail: "50 g oats + 250 ml milk + pea protein + chia + pumpkin seeds + kishmish + honey + ginger." },
+    { time: "09:30", title: "Breakfast B - Dalia / Poha", detail: "Dalia + milk + honey, OR Poha with peas, peanuts, lemon. Alternate with Breakfast A." },
+    { time: "14:00", title: "Lunch", detail: "2-3 wheat + besan roti + leafy sabji + salad. Turmeric + black pepper with cooked food." },
+    { time: "16:45", title: "Snack (optional)", detail: "40 g soya chunks, boiled, dry-roasted, spiced. Soya lowers LDL." },
+    { time: "18:00", title: "Milk time", detail: "150-200 ml warm milk + turmeric + black pepper. No dairy after this." },
+    { time: "20:00-20:30", title: "Dinner", detail: "Dal + 2 roti OR khichdi. NO dairy at night." },
+    { time: "21:45", title: "Before bed", detail: "Warm water + pinch turmeric. NO milk." }
+  ];
+}
+
+var WORKOUTS = {
+  A: {
+    label: "Day A - Push & Core",
+    exercises: [
+      { id: "A1", name: "Band Chest Press", scheme: "2-3 x 10-15" },
+      { id: "A2", name: "Band Shoulder Press", scheme: "2-3 x 10-15" },
+      { id: "A3", name: "Dumbbell Floor Press (7-8 kg)", scheme: "2-3 x 10-15" },
+      { id: "A4", name: "Diamond Push-Ups", scheme: "2-3 x 8-12" },
+      { id: "A5", name: "Band Woodchoppers", scheme: "2-3 x 10/side" },
+      { id: "A6", name: "Hollow Body Hold", scheme: "3 x 20-30 s" }
+    ]
+  },
+  B: {
+    label: "Day B - Pull & Legs",
+    exercises: [
+      { id: "B1", name: "Band Single-Arm Row", scheme: "2-3 x 10-15/side" },
+      { id: "B2", name: "Band Pull-Aparts", scheme: "3 x 15-20" },
+      { id: "B3", name: "Band Romanian Deadlift", scheme: "2-3 x 12-15" },
+      { id: "B4", name: "Bulgarian Split Squat", scheme: "2-3 x 8-12/leg" },
+      { id: "B5", name: "Band Bicep Curl", scheme: "2-3 x 12-15" },
+      { id: "B6", name: "Lizard Walk - only if pain-free", scheme: "3 x 10 steps" }
+    ]
+  },
+  C: {
+    label: "Day C - Baki Foundation & Spine",
+    exercises: [
+      { id: "C1", name: "Frog Stand Progression", scheme: "5 x 8-10 s" },
+      { id: "C2", name: "Deep Squat Hold", scheme: "3 x 30 s" },
+      { id: "C3", name: "Wall Sit", scheme: "3 x 20-30 s" },
+      { id: "C4", name: "Chin Tucks", scheme: "3 x 10" },
+      { id: "C5", name: "Wall Angels", scheme: "3 x 10" },
+      { id: "C6", name: "Band Face Pulls", scheme: "3 x 15" }
+    ]
+  },
+  D: {
+    label: "Day D - Conditioning & Mobility",
+    exercises: [
+      { id: "D1", name: "Bear Crawl", scheme: "3 x 10 steps" },
+      { id: "D2", name: "Crab Walk", scheme: "3 x 10 steps" },
+      { id: "D3", name: "Spider Walk", scheme: "3 x 10 steps" },
+      { id: "D4", name: "Band Face Pulls", scheme: "3 x 15" },
+      { id: "D5", name: "Band Pull-Aparts", scheme: "3 x 20" },
+      { id: "D6", name: "Deep Stretch Flow", scheme: "15 min" }
+    ]
+  },
+  R: {
+    label: "Day R - Rest / Mobility",
+    exercises: [
+      { id: "R1", name: "Deep Stretch Flow", scheme: "15 min" },
+      { id: "R2", name: "Cat-Cow", scheme: "2 x 10" },
+      { id: "R3", name: "Physiological Sighs", scheme: "10 reps" },
+      { id: "R4", name: "Easy Walk", scheme: "30-45 min" }
+    ]
+  }
+};
+
+var VOICE = {
+  levers: [
+    { title: "1 - Low larynx", detail: "Relaxed, slightly lowered voice box. Feels like a lazy yawn held gently — never squeezed." },
+    { title: "2 - Chest resonance", detail: "Vibration felt in chest and face, not the throat. Hand on sternum: you should feel it buzz." },
+    { title: "3 - Diaphragm support", detail: "Steady airflow from the belly. Belly expands on inhale, ribs stay wide, shoulders stay still." },
+    { title: "4 - Slow pace + pauses", detail: "Silence signals control. Speak slower than comfortable; let the pauses carry the weight." }
+  ],
+  drills: [
+    { id: "vm1", name: "Diaphragmatic Breathing", minutes: 2 },
+    { id: "vm2", name: "Lip Trills", minutes: 1 },
+    { id: "vm3", name: "Humming (mmm)", minutes: 2 },
+    { id: "vm4", name: "Yawn-Sigh", minutes: 1 },
+    { id: "vm5", name: "Pitch Glide Down", minutes: 2 },
+    { id: "vm6", name: "Ng Hum - Vowel", minutes: 2 },
+    { id: "vm7", name: "Low Read Aloud", minutes: 3 },
+    { id: "vm8", name: "Pause & Pace Drill", minutes: 2 }
+  ]
+};
+
+var GROUPS = ["Morning", "Deep Work", "Evening", "Code", "Voice"];
+var STORAGE_KEY = "sigma_blueprint_v1";
+var STREAK_MIN = 60;
+var tab = "dashboard";
+
+function esc(s) {
+  return String(s == null ? "" : s).replace(/[&<>"']/g, function(c) {
+    return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+  });
+}
+
+function showToast(msg) {
+  var t = document.getElementById("toast");
+  var el = document.createElement("div");
+  el.className = "toast";
+  el.textContent = msg;
+  t.appendChild(el);
+  setTimeout(function() { el.remove(); }, 4800);
+}
+
+function showModal(html) {
+  var ov = document.getElementById("ov");
+  ov.innerHTML = '<div class="modal">' + html + '</div>';
+  ov.classList.remove("hidden");
+}
+
+function closeModal() {
+  var ov = document.getElementById("ov");
+  ov.classList.add("hidden");
+  ov.innerHTML = "";
+}
+
+function dstr(d) {
+  return d.getFullYear() + "-" +
+    String(d.getMonth() + 1).padStart(2, "0") + "-" +
+    String(d.getDate()).padStart(2, "0");
+}
+
+function parseD(s) {
+  var p = String(s).split("-");
+  return new Date(+p[0], +p[1] - 1, +p[2]);
+}
+
+function todayStr() { return dstr(new Date()); }
+
+function addDays(s, n) {
+  var d = parseD(s);
+  d.setDate(d.getDate() + n);
+  return dstr(d);
+}
+
+function dowOf(s) { return parseD(s).getDay(); }
+
+function lastNDates(n, end) {
+  var a = [];
+  for (var i = n - 1; i >= 0; i--) a.push(addDays(end, -i));
+  return a;
+}
+
+function mondayOf(s) {
+  return addDays(s, -((dowOf(s) + 6) % 7));
+}
+
+function scheduleDay(date) {
+  return SCHED[dowOf(date)];
+}
+
+var DB = loadState();
+var checkDate = todayStr();
+
+function defaultDB() {
+  return {
+    settings: {
+      waterGoal: 3000,
+      stepGoal: 8000,
+      reminderMin: 60,
+      autoCheckWalk: true,
+      autoCheckSleep: true,
+      autoCheckTraining: true,
+      lastWaterAt: Date.now(),
+      created: new Date().toISOString()
+    },
+    habits: defaultHabits(),
+    timetable: defaultTimetable(),
+    diet: defaultDiet(),
+    logs: {}
+  };
+}
+
+function loadState() {
+  try {
+    var raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem("hw_os_step2");
+    if (raw) {
+      var parsed = JSON.parse(raw);
+      var def = defaultDB();
+      return {
+        settings: Object.assign({}, def.settings, parsed.settings || {}),
+        habits: (parsed.content && parsed.content.habits) || parsed.habits || def.habits,
+        timetable: (parsed.content && parsed.content.timetable) || parsed.timetable || def.timetable,
+        diet: (parsed.content && parsed.content.diet) || parsed.diet || def.diet,
+        logs: parsed.logs || {}
+      };
+    }
+    return defaultDB();
+  } catch (e) {
+    return defaultDB();
+  }
+}
+
+function saveState() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(DB));
+  } catch (e) {
+    showToast("Storage full or blocked.");
+  }
+}
+
+function getHabits() { return DB.habits || defaultHabits(); }
+function getTimetable() { return DB.timetable || defaultTimetable(); }
+function getDiet() { return DB.diet || defaultDiet(); }
+
+function getLog(date) {
+  var l = DB.logs[date];
+  if (!l) return { tasks: {}, exercises: {}, voice: {}, water: 0, watch: {} };
+  if (!l.tasks) l.tasks = {};
+  if (!l.exercises) l.exercises = {};
+  if (!l.voice) l.voice = {};
+  if (!l.watch) l.watch = {};
+  if (typeof l.water !== "number") l.water = 0;
+  return l;
+}
+
+function ensureLog(date) {
+  if (!DB.logs[date]) {
+    DB.logs[date] = { tasks: {}, exercises: {}, voice: {}, water: 0, watch: {} };
+  }
+  return getLog(date);
+}
+
+// ============================================================================
+// SAMSUNG HEALTH & GALAXY WATCH 4 CLASSIC (EEPD) INTEGRATION BRIDGE
+// Works via:
+// 1. Native Android APK WebView Bridge (`window.AndroidHealthBridge`) reading
+//    Health Connect data synced from Samsung Health & Galaxy Watch 4 Classic.
+// 2. Samsung Health CSV/JSON Data Export file parser (`importSamsungHealthFile`).
+// 3. Test Sync Simulator when previewing inside a desktop browser.
+// ============================================================================
+function applyWatchPayload(date, payload) {
+  var log = ensureLog(date);
+  if (!log.watch) log.watch = {};
+
+  if (payload.steps != null) log.watch.steps = +payload.steps;
+  if (payload.sleepHrs != null) {
+    log.watch.sleepHrs = +(+payload.sleepHrs).toFixed(1);
+    log.sleepHrs = log.watch.sleepHrs;
+  }
+  if (payload.avgHr != null) log.watch.avgHr = Math.round(+payload.avgHr);
+  if (payload.restingHr != null) log.watch.restingHr = Math.round(+payload.restingHr);
+  if (payload.activeKcal != null) log.watch.activeKcal = Math.round(+payload.activeKcal);
+  if (payload.workoutMin != null) log.watch.workoutMin = Math.round(+payload.workoutMin);
+  if (payload.spo2 != null) log.watch.spo2 = Math.round(+payload.spo2);
+  log.watch.syncedAt = new Date().toLocaleTimeString();
+  log.watch.device = payload.device || "Galaxy Watch4 Classic (EEPD)";
+
+  // Auto-check habits based on Galaxy Watch 4 Classic thresholds
+  var autoChecked = [];
+  var stepGoal = (DB.settings && DB.settings.stepGoal) || 8000;
+  if (DB.settings.autoCheckWalk !== false && log.watch.steps >= stepGoal) {
+    if (!log.tasks.h_walk) autoChecked.push("Evening walk");
+    log.tasks.h_walk = true;
+  }
+  if (DB.settings.autoCheckSleep !== false && log.watch.sleepHrs >= 7.0) {
+    if (!log.tasks.h_sleep) autoChecked.push("Sleep by 10 PM");
+    log.tasks.h_sleep = true;
+  }
+  if (DB.settings.autoCheckTraining !== false && log.watch.workoutMin >= 25) {
+    if (!log.tasks.h_training) autoChecked.push("Morning training");
+    log.tasks.h_training = true;
+  }
+
+  saveState();
+  render();
+  var msg = "Synced Galaxy Watch 4 Classic (" + (log.watch.steps || 0) + " steps, " + (log.watch.sleepHrs || 0) + "h sleep)";
+  if (autoChecked.length) msg += " — Auto-checked: " + autoChecked.join(", ");
+  showToast(msg);
+}
+
+// Global callback invoked by the Native Android APK Health Connect Bridge
+window.onSamsungHealthData = function(jsonStringOrObj) {
+  try {
+    var data = typeof jsonStringOrObj === "string" ? JSON.parse(jsonStringOrObj) : jsonStringOrObj;
+    applyWatchPayload(data.date || checkDate, data);
+  } catch (e) {
+    showToast("Error parsing watch data from Android bridge.");
+  }
+};
+
+function syncSamsungHealth() {
+  // 1. If running inside the compiled Android APK with Health Connect bridge:
+  if (window.AndroidHealthBridge && typeof window.AndroidHealthBridge.requestSync === "function") {
+    showToast("Requesting Samsung Health data via Android Health Connect...");
+    window.AndroidHealthBridge.requestSync(checkDate);
+    return;
+  }
+  // 2. If running in browser/Canvas preview, offer instant test sync or file import:
+  var cur = getLog(checkDate).watch || {};
+  applyWatchPayload(checkDate, {
+    steps: cur.steps ? cur.steps + 1250 : 8420,
+    sleepHrs: cur.sleepHrs || 7.8,
+    avgHr: 68,
+    restingHr: 56,
+    activeKcal: 485,
+    workoutMin: 45,
+    spo2: 98,
+    device: "Galaxy Watch4 Classic (EEPD)"
+  });
+}
+
+function importSamsungHealthFile(input) {
+  var f = input.files && input.files[0];
+  if (!f) return;
+  var r = new FileReader();
+  r.onload = function() {
+    var text = String(r.result || "");
+    try {
+      // Check if JSON format
+      if (text.trim().charAt(0) === "{" || text.trim().charAt(0) === "[") {
+        var obj = JSON.parse(text);
+        var item = Array.isArray(obj) ? obj[obj.length - 1] : obj;
+        applyWatchPayload(checkDate, {
+          steps: item.step_count || item.steps || item.count || 0,
+          sleepHrs: item.sleep_duration ? +(item.sleep_duration / 60).toFixed(1) : (item.sleepHrs || 7.5),
+          avgHr: item.heart_rate || item.avgHr || 68,
+          restingHr: item.resting_hr || item.restingHr || 58,
+          activeKcal: item.calorie || item.activeKcal || 420,
+          workoutMin: item.exercise_duration ? Math.round(item.exercise_duration / 60000) : (item.workoutMin || 35)
+        });
+        return;
+      }
+      // Parse Samsung Health CSV export (e.g. com.samsung.shealth.step_daily_trend.csv)
+      var lines = text.split(/\r?\n/).filter(function(line) { return line.trim().length > 0; });
+      var headerIdx = -1;
+      for (var i = 0; i < Math.min(5, lines.length); i++) {
+        if (lines[i].indexOf("count") >= 0 || lines[i].indexOf("step") >= 0 || lines[i].indexOf("calorie") >= 0 || lines[i].indexOf("heart_rate") >= 0) {
+          headerIdx = i;
+          break;
+        }
+      }
+      if (headerIdx >= 0 && lines.length > headerIdx + 1) {
+        var cols = lines[headerIdx].split(",");
+        var lastRow = lines[lines.length - 1].split(",");
+        var map = {};
+        for (var c = 0; c < cols.length; c++) {
+          map[cols[c].trim().toLowerCase()] = lastRow[c] ? lastRow[c].trim() : "";
+        }
+        var steps = parseInt(map.count || map.step_count || map.steps || "0", 10);
+        var cal = parseFloat(map.calorie || map.active_calorie || "0");
+        var hr = parseFloat(map.heart_rate || map.mean || "0");
+        applyWatchPayload(checkDate, {
+          steps: isNaN(steps) ? 0 : steps,
+          activeKcal: isNaN(cal) ? 0 : Math.round(cal),
+          avgHr: isNaN(hr) || hr === 0 ? 68 : Math.round(hr)
+        });
+      } else {
+        showToast("Unrecognized CSV columns — use step_daily_trend or exercise CSV from Samsung Health.");
+      }
+    } catch (e) {
+      showToast("Could not parse Samsung Health export file.");
+    }
+  };
+  r.readAsText(f);
+  input.value = "";
+}
+
+function saveManualWatch() {
+  var steps = document.getElementById("mw_steps").value;
+  var sleep = document.getElementById("mw_sleep").value;
+  var hr = document.getElementById("mw_hr").value;
+  var rhr = document.getElementById("mw_rhr").value;
+  var kcal = document.getElementById("mw_kcal").value;
+  var wmin = document.getElementById("mw_wmin").value;
+  applyWatchPayload(checkDate, {
+    steps: steps === "" ? null : +steps,
+    sleepHrs: sleep === "" ? null : +sleep,
+    avgHr: hr === "" ? null : +hr,
+    restingHr: rhr === "" ? null : +rhr,
+    activeKcal: kcal === "" ? null : +kcal,
+    workoutMin: wmin === "" ? null : +wmin
+  });
+}
+
+function isLogged(date) {
+  var l = DB.logs[date];
+  if (!l) return false;
+  if (l.water && l.water > 0) return true;
+  if (l.notes && String(l.notes).trim()) return true;
+  if (l.watch && l.watch.steps > 0) return true;
+  var keys = ["sleepHrs", "energy", "mood", "pain", "focus", "urges"];
+  for (var i = 0; i < keys.length; i++) {
+    if (l[keys[i]] != null && l[keys[i]] !== "") return true;
+  }
+  if (l.tasks && Object.values(l.tasks).some(Boolean)) return true;
+  if (l.exercises && Object.values(l.exercises).some(function(e) { return e && e.done; })) return true;
+  if (l.voice && Object.values(l.voice).some(Boolean)) return true;
+  return false;
+}
+
+function pctOf(date) {
+  var log = getLog(date);
+  var habits = getHabits();
+  var done = 0;
+  for (var i = 0; i < habits.length; i++) {
+    if (log.tasks[habits[i].id]) done++;
+  }
+  return habits.length ? Math.round((done / habits.length) * 100) : 0;
+}
+
+function avgPct(n) {
+  var days = lastNDates(n, todayStr()).filter(isLogged);
+  if (!days.length) return null;
+  var sum = 0;
+  for (var i = 0; i < days.length; i++) sum += pctOf(days[i]);
+  return Math.round(sum / days.length);
+}
+
+function habitRate(id, n) {
+  var days = lastNDates(n || 14, todayStr()).filter(isLogged);
+  if (!days.length) return null;
+  var c = 0;
+  for (var i = 0; i < days.length; i++) {
+    if (getLog(days[i]).tasks[id]) c++;
+  }
+  return Math.round((c / days.length) * 100);
+}
+
+function currentStreak() {
+  var streak = 0;
+  var d = todayStr();
+  if (pctOf(d) < STREAK_MIN) d = addDays(d, -1);
+  while (pctOf(d) >= STREAK_MIN && streak < 3650) {
+    streak++;
+    d = addDays(d, -1);
+  }
+  return streak;
+}
+
+function pearson(xs, ys) {
+  var n = xs.length;
+  if (n < 5) return null;
+  var mx = xs.reduce(function(a, b) { return a + b; }, 0) / n;
+  var my = ys.reduce(function(a, b) { return a + b; }, 0) / n;
+  var num = 0, dx = 0, dy = 0;
+  for (var i = 0; i < n; i++) {
+    var a = xs[i] - mx, b = ys[i] - my;
+    num += a * b;
+    dx += a * a;
+    dy += b * b;
+  }
+  if (!dx || !dy) return null;
+  return num / Math.sqrt(dx * dy);
+}
+
+function linreg(ys) {
+  var n = ys.length;
+  if (n < 4) return null;
+  var mx = (n - 1) / 2;
+  var my = ys.reduce(function(a, b) { return a + b; }, 0) / n;
+  var num = 0, den = 0;
+  for (var i = 0; i < n; i++) {
+    num += (i - mx) * (ys[i] - my);
+    den += (i - mx) * (i - mx);
+  }
+  if (!den) return null;
+  var slope = num / den;
+  return { slope: slope, intercept: my - slope * mx, n: n };
+}
+
+function valOf(l, key, d) {
+  if (!l) return null;
+  if (key === "pct") return isLogged(d) ? pctOf(d) : null;
+  if (key === "study") {
+    var c = 0;
+    if (l.tasks && l.tasks.h_study1) c++;
+    if (l.tasks && l.tasks.h_study2) c++;
+    return isLogged(d) ? c : null;
+  }
+  if (key === "steps") return (l.watch && l.watch.steps != null) ? +l.watch.steps : null;
+  if (key === "sleepHrs" || key === "mood" || key === "energy" || key === "pain") {
+    return (l[key] == null || l[key] === "") ? null : +l[key];
+  }
+  if (key.charAt(0) === "h") {
+    return isLogged(d) ? (l.tasks && l.tasks[key] ? 1 : 0) : null;
+  }
+  return null;
+}
+
+function corr(a, b) {
+  var dates = lastNDates(28, todayStr());
+  var xs = [], ys = [];
+  for (var i = 0; i < dates.length; i++) {
+    var d = dates[i], l = DB.logs[d];
+    var x = valOf(l, a, d), y = valOf(l, b, d);
+    if (x == null || y == null) continue;
+    xs.push(x);
+    ys.push(y);
+  }
+  return { r: pearson(xs, ys), n: xs.length };
+}
+
+function buildTabs() {
+  document.getElementById("tabs").innerHTML = TABS.map(function(t) {
+    return '<button data-t="' + t[0] + '" onclick="go(\'' + t[0] + '\')">' + t[1] + '</button>';
+  }).join("");
+}
+
+function go(nextTab) {
+  tab = nextTab;
+  var btns = document.querySelectorAll("#tabs button");
+  for (var i = 0; i < btns.length; i++) {
+    btns[i].classList.toggle("on", btns[i].getAttribute("data-t") === tab);
+  }
+  render();
+}
+
+function setCheckDate(d) {
+  if (!d) return;
+  if (d > todayStr()) d = todayStr();
+  checkDate = d;
+  render();
+}
+
+function shiftDate(delta) {
+  setCheckDate(addDays(checkDate, delta));
+}
+
+function toggleHabit(id, isChecked) {
+  var log = ensureLog(checkDate);
+  log.tasks[id] = !!isChecked;
+  saveState();
+  render();
+}
+
+function markAll(state) {
+  var log = ensureLog(checkDate);
+  var habits = getHabits();
+  for (var i = 0; i < habits.length; i++) {
+    log.tasks[habits[i].id] = state;
+  }
+  saveState();
+  render();
+}
+
+function addWater(ml) {
+  var log = ensureLog(checkDate);
+  log.water = (log.water || 0) + ml;
+  DB.settings.lastWaterAt = Date.now();
+  saveState();
+  render();
+}
+
+function resetWater() {
+  var log = ensureLog(checkDate);
+  log.water = 0;
+  saveState();
+  render();
+}
+
+function setWorkoutDay(dayKey) {
+  var log = ensureLog(checkDate);
+  log.workoutDay = dayKey;
+  saveState();
+  render();
+}
+
+function toggleEx(exId, isChecked) {
+  var log = ensureLog(checkDate);
+  var cur = log.exercises[exId] || { reps: "" };
+  log.exercises[exId] = { done: !!isChecked, reps: cur.reps || "" };
+  saveState();
+  render();
+}
+
+function setReps(exId, val) {
+  var log = ensureLog(checkDate);
+  var cur = log.exercises[exId] || { done: false };
+  log.exercises[exId] = { done: !!cur.done, reps: val };
+  saveState();
+}
+
+function toggleVoice(drillId, isChecked) {
+  var log = ensureLog(checkDate);
+  log.voice[drillId] = !!isChecked;
+  saveState();
+  render();
+}
+
+function setMetric(key, val) {
+  var log = ensureLog(checkDate);
+  log[key] = val === "" ? null : +val;
+  saveState();
+  var el = document.getElementById("saveIndicator");
+  if (el) el.textContent = "Saved " + new Date().toLocaleTimeString();
+}
+
+function setNotes(val) {
+  var log = ensureLog(checkDate);
+  log.notes = val;
+  saveState();
+  var el = document.getElementById("saveIndicator");
+  if (el) el.textContent = "Saved " + new Date().toLocaleTimeString();
+}
+
+function setSetting(key, val) {
+  var n = parseFloat(val);
+  if (isNaN(n) || n < 15) return;
+  DB.settings[key] = n;
+  saveState();
+  render();
+  showToast("Updated setting.");
+}
+
+function openAddHabitModal() {
+  var opts = GROUPS.map(function(g) { return '<option value="' + esc(g) + '">' + esc(g) + '</option>'; }).join("");
+  showModal(
+    '<div class="modhead"><b>Add Custom Habit</b><button class="btn ghost" onclick="closeModal()">&#10005;</button></div>'
+    + '<div class="frow"><label>Habit Name</label><input type="text" id="newHabitName" placeholder="e.g. 20 min SQL practice"></div>'
+    + '<div class="frow"><label>Category Group</label><select id="newHabitGroup">' + opts + '</select></div>'
+    + '<div class="mfoot"><button class="btn goldbtn" onclick="confirmAddHabit()">Save Habit</button></div>'
+  );
+}
+
+function confirmAddHabit() {
+  var nameEl = document.getElementById("newHabitName");
+  var grpEl = document.getElementById("newHabitGroup");
+  var name = nameEl ? String(nameEl.value).trim() : "";
+  if (!name) return;
+  DB.habits.push({ id: "h_" + Date.now().toString(36), group: grpEl.value, name: name });
+  saveState();
+  closeModal();
+  render();
+  showToast("Added habit: " + name);
+}
+
+function removeHabit(idx) {
+  var h = DB.habits[idx];
+  if (!h) return;
+  DB.habits.splice(idx, 1);
+  saveState();
+  render();
+  showToast("Removed habit: " + h.name);
+}
+
+function resetDefaultHabits() {
+  DB.habits = defaultHabits();
+  DB.timetable = defaultTimetable();
+  DB.diet = defaultDiet();
+  saveState();
+  render();
+  showToast("Default habits & blueprint restored.");
+}
+
+function exportJSON() {
+  var blob = new Blob([JSON.stringify(DB, null, 2)], { type: "application/json" });
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "human-weapon-os-backup-" + todayStr() + ".json";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(function() { URL.revokeObjectURL(a.href); }, 3000);
+  showToast("Backup JSON downloaded.");
+}
+
+function importFile(input) {
+  var f = input.files && input.files[0];
+  if (!f) return;
+  var r = new FileReader();
+  r.onload = function() {
+    try {
+      var o = JSON.parse(r.result);
+      if (!o || typeof o !== "object" || !o.logs) throw new Error("Invalid format");
+      DB.logs = o.logs;
+      if (o.settings) DB.settings = Object.assign({}, DB.settings, o.settings);
+      saveState();
+      render();
+      showToast("Backup imported (" + Object.keys(DB.logs).length + " logged days).");
+    } catch (e) {
+      showToast("Could not read backup JSON file.");
+    }
+  };
+  r.readAsText(f);
+  input.value = "";
+}
+
+function weeklyReport() {
+  var m = mondayOf(todayStr()), t = todayStr(), rows = [], sum = 0, n = 0;
+  for (var i = 0; i < 7; i++) {
+    var d = addDays(m, i), lg = isLogged(d), p = lg ? pctOf(d) : null, l = getLog(d);
+    if (lg) { sum += p; n++; }
+    rows.push(
+      "<tr><td>" + DOW[dowOf(d)] + "</td><td>" + d + "</td><td>" + (lg ? p + "%" : "-") + "</td>"
+      + "<td>" + (l.watch && l.watch.steps ? l.watch.steps : "-") + "</td>"
+      + "<td>" + (lg ? (l.water || 0) : "-") + "</td><td>" + (l.sleepHrs == null ? "-" : l.sleepHrs) + "</td>"
+      + "<td>" + (l.mood == null ? "-" : l.mood) + "</td><td>" + (l.pain == null ? "-" : l.pain) + "</td>"
+      + "<td>" + esc(String(l.notes || "").slice(0, 50)) + "</td></tr>"
+    );
+  }
+  var avg = n ? Math.round(sum / n) : null;
+  var html = '<div class="report"><h2>Human Weapon OS — Weekly Report</h2>'
+    + '<div style="font-size:12px">Week of ' + m + ' to ' + addDays(m, 6) + '</div>'
+    + '<table><tr><th>Day</th><th>Date</th><th>Completion</th><th>Steps</th><th>Water ml</th><th>Sleep h</th><th>Mood</th><th>Pain</th><th>Notes</th></tr>'
+    + rows.join("") + '</table>'
+    + '<div style="margin-top:10px;font-size:13px"><b>Weekly Average Completion:</b> ' + (avg == null ? "-" : avg + "%") + ' across ' + n + ' logged day(s)</div></div>';
+  showModal(
+    '<div class="modhead"><b>Weekly Report</b><span><button class="btn goldbtn" onclick="window.print()">Print</button> <button class="btn ghost" onclick="closeModal()">Close</button></span></div>' + html
+  );
+}
+
+function nextRows(count) {
+  var tt = getTimetable();
+  var now = new Date();
+  var mins = now.getHours() * 60 + now.getMinutes();
+  var idx = -1;
+  for (var i = 0; i < tt.length; i++) {
+    var m = /^(\d{1,2}):(\d{2})/.exec(tt[i].time || "");
+    if (!m) continue;
+    var rowMins = (+m[1]) * 60 + (+m[2]);
+    if (rowMins > mins) {
+      idx = i;
+      break;
+    }
+  }
+  if (idx < 0) {
+    return '<div class="dim" style="padding:6px 0">Day is done. Sleep by 22:00 — protect the 8 hours.</div>';
+  }
+  var out = "";
+  for (var j = idx; j < Math.min(idx + count, tt.length); j++) {
+    out += '<div class="arow"><div class="amain"><b>' + esc(tt[j].time) + '</b><span>' + esc(tt[j].activity) + '</span></div></div>';
+  }
+  return out;
+}
+
+function bars14() {
+  var dts = lastNDates(14, todayStr());
+  var bars = dts.map(function(d) {
+    var p = pctOf(d);
+    return '<div class="bar" title="' + d + ' · ' + p + '%" style="height:' + Math.max(3, p) + '%"></div>';
+  }).join("");
+  var labels = dts.map(function(d) {
+    return '<span>' + parseD(d).getDate() + '</span>';
+  }).join("");
+  return '<div class="bars">' + bars + '</div><div class="barlabels">' + labels + '</div>';
+}
+
+function heat35() {
+  var dts = lastNDates(35, todayStr());
+  var cells = dts.map(function(d) {
+    var lg = isLogged(d);
+    var p = pctOf(d);
+    var lvl = !lg ? "none" : p <= 25 ? "l1" : p <= 50 ? "l2" : p <= 75 ? "l3" : p < 100 ? "l4" : "l5";
+    return '<div class="cell ' + lvl + '" title="' + d + ' · ' + (lg ? p + '%' : 'no log') + '"></div>';
+  }).join("");
+  return '<div class="heat">' + cells + '</div>'
+    + '<div class="legend dim"><span>no log</span><span class="cell none"></span><span class="cell l1"></span><span class="cell l2"></span><span class="cell l3"></span><span class="cell l5"></span><span>100%</span></div>';
+}
+
+function renderWatchBanner(log) {
+  var w = log.watch || {};
+  var stepGoal = (DB.settings && DB.settings.stepGoal) || 8000;
+  return '<div class="card">'
+    + '<h3>Samsung Galaxy Watch 4 Classic (EEPD) — Biometrics (' + esc(checkDate) + ')</h3>'
+    + '<div class="grid g4">'
+    + '<div class="watch-stat"><div class="lbl">Steps</div><div class="val">' + (w.steps != null ? w.steps.toLocaleString() : "—") + '</div><div class="dim">Goal: ' + stepGoal.toLocaleString() + '</div></div>'
+    + '<div class="watch-stat"><div class="lbl">Watch Sleep</div><div class="val">' + (w.sleepHrs != null ? w.sleepHrs + " h" : "—") + '</div><div class="dim">Target: 8.0 h</div></div>'
+    + '<div class="watch-stat"><div class="lbl">Heart Rate</div><div class="val">' + (w.avgHr != null ? w.avgHr + " bpm" : "—") + '</div><div class="dim">Resting: ' + (w.restingHr != null ? w.restingHr + " bpm" : "—") + '</div></div>'
+    + '<div class="watch-stat"><div class="lbl">Active Burn</div><div class="val">' + (w.activeKcal != null ? w.activeKcal + " kcal" : "—") + '</div><div class="dim">Workout: ' + (w.workoutMin != null ? w.workoutMin + " min" : "—") + '</div></div>'
+    + '</div>'
+    + '<div class="dim" style="margin-top:8px">'
+    + (w.syncedAt ? "Last synced at " + esc(w.syncedAt) + " from " + esc(w.device || "Galaxy Watch4 Classic (EEPD)") : "Not synced yet today — click 'Sync Galaxy Watch 4 Classic' above or open Watch Sync tab.")
+    + '</div></div>';
+}
+
+function renderTabContent(log) {
+  if (tab === "watch") {
+    var w = log.watch || {};
+    var isNativeApk = !!(window.AndroidHealthBridge && typeof window.AndroidHealthBridge.requestSync === "function");
+    return renderWatchBanner(log)
+      + '<div class="grid g2">'
+      + '<div class="card"><h3>1. Live Sync via Health Connect (Android APK)</h3>'
+      + '<p class="dim" style="margin-top:0">Your <b>Samsung Galaxy Watch 4 Classic (EEPD)</b> syncs biometrics to <b>Samsung Health</b>, which shares Steps, Sleep, Heart Rate, and Workouts with Android\'s on-device <b>Health Connect</b> service.</p>'
+      + '<div class="note" style="margin-bottom:12px"><b>Bridge Status:</b> '
+      + (isNativeApk ? '<span style="color:var(--green)">Connected to Native Android Health Connect Bridge</span>' : '<span class="gold">Browser / Preview Mode (Simulates Watch 4 Classic Sync)</span>')
+      + '</div>'
+      + '<div class="btn-row">'
+      + '<button class="btn goldbtn" onclick="syncSamsungHealth()">&#8635; Sync Now from Watch 4 Classic</button>'
+      + '</div>'
+      + '<div class="ghead" style="margin-top:16px"><b>Import Samsung Health Export (.csv / .json)</b></div>'
+      + '<p class="dim" style="margin:4px 0 10px">You can also import exported files from <i>Samsung Health &rarr; Settings &rarr; Download personal data</i>:</p>'
+      + '<label class="btn" style="cursor:pointer;display:inline-block">Upload Samsung Health CSV / JSON<input type="file" accept=".csv,.json,text/csv,application/json" style="display:none" onchange="importSamsungHealthFile(this)"></label>'
+      + '</div>'
+      + '<div class="card"><h3>2. Manual / Override Watch Biometrics (' + esc(checkDate) + ')</h3>'
+      + '<div class="metric"><label>Steps Count</label><input type="number" id="mw_steps" min="0" step="100" value="' + esc(w.steps == null ? "" : w.steps) + '"></div>'
+      + '<div class="metric"><label>Sleep Duration (hours)</label><input type="number" id="mw_sleep" min="0" max="16" step="0.1" value="' + esc(w.sleepHrs == null ? "" : w.sleepHrs) + '"></div>'
+      + '<div class="metric"><label>Average Heart Rate (bpm)</label><input type="number" id="mw_hr" min="35" max="220" step="1" value="' + esc(w.avgHr == null ? "" : w.avgHr) + '"></div>'
+      + '<div class="metric"><label>Resting Heart Rate (bpm)</label><input type="number" id="mw_rhr" min="35" max="150" step="1" value="' + esc(w.restingHr == null ? "" : w.restingHr) + '"></div>'
+      + '<div class="metric"><label>Active Calories (kcal)</label><input type="number" id="mw_kcal" min="0" step="10" value="' + esc(w.activeKcal == null ? "" : w.activeKcal) + '"></div>'
+      + '<div class="metric"><label>Workout Duration (min)</label><input type="number" id="mw_wmin" min="0" step="5" value="' + esc(w.workoutMin == null ? "" : w.workoutMin) + '"></div>'
+      + '<div class="btn-row"><button class="btn goldbtn" onclick="saveManualWatch()">Save &amp; Auto-Check Habits</button></div>'
+      + '</div></div>'
+      + '<div class="card"><h3>How Automatic Habit Completion Works</h3>'
+      + '<ul class="plain">'
+      + '<li><b>Steps &ge; ' + ((DB.settings && DB.settings.stepGoal) || 8000) + ' steps:</b> Automatically checks off <b>Evening walk</b>.</li>'
+      + '<li><b>Sleep &ge; 7.0 hours:</b> Automatically fills your Night Check-in Sleep hours and checks off <b>Sleep by 10 PM</b>.</li>'
+      + '<li><b>Workout &ge; 25 minutes:</b> Automatically checks off <b>Morning training</b>.</li>'
+      + '</ul></div>';
+  }
+
+  if (tab === "routine") {
+    var rows = getTimetable().map(function(r) {
+      return '<tr><td class="tm">' + esc(r.time) + '</td><td>' + esc(r.activity) + '</td></tr>';
+    }).join("");
+    function ul(arr) { return arr.map(function(x) { return '<li>' + esc(x) + '</li>'; }).join(""); }
+    return '<div class="card"><h3>Daily Timetable</h3><table class="tbl">' + rows + '</table></div>'
+      + '<div class="grid g2">'
+      + '<div class="card"><h3>Pain-Free Spine — Setup</h3><ul class="plain">' + ul(SPINE_SETUP) + '</ul></div>'
+      + '<div class="card"><h3>Spine Reset — Every 30-45 Min</h3><ul class="plain">' + ul(SPINE_RESET) + '</ul></div>'
+      + '</div>'
+      + '<div class="grid g2">'
+      + '<div class="card"><h3>Shiva Mindset</h3><ul class="plain">' + ul(SHIVA) + '</ul></div>'
+      + '<div class="card"><h3>Huberman Brain Stack</h3><ul class="plain">' + ul(HUBERMAN) + '</ul></div>'
+      + '</div>';
+  }
+
+  if (tab === "diet") {
+    var meals = getDiet().map(function(m) {
+      return '<div class="arow"><div class="amain"><b>' + esc(m.time) + ' — ' + esc(m.title) + '</b><span>' + esc(m.detail) + '</span></div></div>';
+    }).join("");
+    var rules = DIET_RULES.map(function(x) { return '<li>' + esc(x) + '</li>'; }).join("");
+    return '<div class="card"><h3>Daily Meals & Timing</h3>' + meals + '</div>'
+      + '<div class="card"><h3>Non-Negotiable Diet Rules</h3><ul class="plain">' + rules + '</ul></div>';
+  }
+
+  if (tab === "training") {
+    var woDay = log.workoutDay || scheduleDay(checkDate);
+    var wo = WORKOUTS[woDay];
+    var picker = Object.keys(WORKOUTS).map(function(k) {
+      return '<button class="btn ' + (k === woDay ? 'goldbtn' : '') + '" onclick="setWorkoutDay(\'' + k + '\')">Day ' + k + '</button>';
+    }).join(" ");
+
+    var exDone = 0;
+    var exList = wo.exercises.map(function(ex) {
+      var st = log.exercises[ex.id];
+      var done = !!(st && st.done);
+      if (done) exDone++;
+      var reps = (st && st.reps) || ex.scheme;
+      return '<div class="task ' + (done ? 'done' : '') + '">'
+        + '<input type="checkbox" ' + (done ? 'checked' : '') + ' onchange="toggleEx(\'' + ex.id + '\', this.checked)">'
+        + '<span class="tl">' + esc(ex.name) + '</span>'
+        + '<input type="text" style="width:125px" value="' + esc(reps) + '" onchange="setReps(\'' + ex.id + '\', this.value)">'
+        + '</div>';
+    }).join("");
+
+    return '<div class="warn"><b>Critical rule:</b> no advanced Baki holds, no long floor sitting, no lizard walks while pain is above 3/10.</div>'
+      + '<div class="card"><h3>Select Workout Split</h3>'
+      + '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px">' + picker + '</div>'
+      + '<div class="dim">Schedule: Mon A · Tue B · Wed C · Thu D · Fri A · Sat B · Sun R</div></div>'
+      + '<div class="card"><h3>' + esc(wo.label) + ' — ' + exDone + '/' + wo.exercises.length + ' done</h3>'
+      + exList
+      + '<div class="note" style="margin-top:12px"><b>Progressive overload:</b> add reps → slow the tempo (3 s down) → add a pause → shorten rest.</div></div>';
+  }
+
+  if (tab === "voice") {
+    var leversHtml = VOICE.levers.map(function(l) {
+      return '<div style="padding:8px 0;border-bottom:1px dashed #1b2330"><b class="gold">' + esc(l.title) + '</b><div class="dim" style="margin-top:3px">' + esc(l.detail) + '</div></div>';
+    }).join("");
+
+    var doneMin = 0;
+    var totMin = 0;
+    var drillsHtml = VOICE.drills.map(function(d) {
+      totMin += d.minutes;
+      var done = !!log.voice[d.id];
+      if (done) doneMin += d.minutes;
+      return '<label class="task ' + (done ? 'done' : '') + '">'
+        + '<input type="checkbox" ' + (done ? 'checked' : '') + ' onchange="toggleVoice(\'' + d.id + '\', this.checked)">'
+        + '<span class="tl">' + esc(d.name) + '</span>'
+        + '<span class="dim">' + d.minutes + ' min</span>'
+        + '</label>';
+    }).join("");
+
+    var wk = mondayOf(checkDate);
+    var cols = [];
+    for (var c = 0; c < 7; c++) cols.push(addDays(wk, c));
+    var head = '<tr><th>Drill</th>' + cols.map(function(colDate) {
+      return '<th>' + DOW[dowOf(colDate)] + '<br><span class="dim">' + parseD(colDate).getDate() + '</span></th>';
+    }).join("") + '</tr>';
+
+    var matrixRows = VOICE.drills.map(function(d) {
+      return '<tr><td>' + esc(d.name) + '</td>' + cols.map(function(colDate) {
+        var dl = DB.logs[colDate];
+        var ok = dl && dl.voice && dl.voice[d.id];
+        return '<td style="text-align:center;color:' + (ok ? 'var(--gold2)' : '#3a4353') + '">' + (ok ? '\u2713' : '\u00B7') + '</td>';
+      }).join("") + '</tr>';
+    }).join("");
+
+    return '<div class="grid g2">'
+      + '<div class="card"><h3>The 4 Vocal Levers</h3>' + leversHtml + '</div>'
+      + '<div class="card"><h3>Daily Voice Drills — ' + doneMin + '/' + totMin + ' min</h3>' + drillsHtml
+      + '<div class="note" style="margin-top:12px"><b>Vocal hygiene:</b> warm water all day · steam 1-2x for sinuses · never force a lower pitch.</div></div>'
+      + '</div>'
+      + '<div class="card"><h3>Weekly Practice Matrix</h3><table class="tbl">' + head + matrixRows + '</table></div>';
+  }
+
+  if (tab === "checkin") {
+    function metricInput(key, label, min, max, step) {
+      var val = log[key] == null ? "" : log[key];
+      return '<div class="metric"><label>' + esc(label) + '</label>'
+        + '<input type="number" min="' + min + '" max="' + max + '" step="' + step + '" value="' + esc(val) + '" onchange="setMetric(\'' + key + '\', this.value)">'
+        + '</div>';
+    }
+    return '<div class="card"><h3>Body & Mind Log (' + esc(checkDate) + ') <span id="saveIndicator" class="dim" style="float:right;text-transform:none;letter-spacing:0"></span></h3>'
+      + metricInput("sleepHrs", "Sleep (hours)", 0, 14, 0.5)
+      + metricInput("energy", "Energy (1-10)", 1, 10, 1)
+      + metricInput("mood", "Mood (1-10)", 1, 10, 1)
+      + metricInput("pain", "Pain (1-10)", 0, 10, 1)
+      + metricInput("focus", "Focus (1-10)", 1, 10, 1)
+      + metricInput("urges", "Urges (1-10) — brahmacharya barometer", 0, 10, 1)
+      + '<div class="frow"><label>Daily Reflection / Notes</label>'
+      + '<textarea rows="3" onchange="setNotes(this.value)">' + esc(log.notes || "") + '</textarea></div>'
+      + '</div>';
+  }
+
+  if (tab === "insights") {
+    var avg14 = avgPct(14), avg7 = avgPct(7), st = currentStreak();
+    var loggedDays = Object.keys(DB.logs).filter(isLogged).length;
+    var CORRS = [
+      { a: "sleepHrs", b: "pct", label: "Sleep hours \u2194 Daily completion" },
+      { a: "steps", b: "pct", label: "Watch 4 Classic Steps \u2194 Daily completion" },
+      { a: "h_training", b: "study", label: "Morning training \u2194 Study blocks" },
+      { a: "h_sunlight", b: "mood", label: "Sunlight \u2194 Mood" },
+      { a: "h_coldshower", b: "energy", label: "Cold shower \u2194 Energy" },
+      { a: "pain", b: "pct", label: "Pain \u2194 Completion" }
+    ];
+    var corrHtml = CORRS.map(function(c) {
+      var res = corr(c.a, c.b);
+      var txt = res.r == null
+        ? '<span class="dim">Needs \u22655 logged days (have ' + res.n + ')</span>'
+        : '<b class="gold">r = ' + res.r.toFixed(2) + '</b> <span class="dim">(' + res.n + ' days)</span>';
+      return '<div class="arow"><div class="amain"><b>' + c.label + '</b><span>' + txt + '</span></div></div>';
+    }).join("");
+
+    var ys = [];
+    lastNDates(21, todayStr()).forEach(function(d) { if (isLogged(d)) ys.push(pctOf(d)); });
+    var lr = linreg(ys);
+    var predText = "Log at least 4 days to unlock linear regression trend prediction.";
+    if (lr) {
+      var nextVal = Math.max(0, Math.min(100, Math.round(lr.intercept + lr.slope * lr.n)));
+      var dir = lr.slope > 1 ? "rising" : lr.slope < -1 ? "falling" : "steady";
+      predText = 'Projected next logged day: <b class="gold">~' + nextVal + '%</b> · trend is <b>' + dir + '</b> (' + (lr.slope >= 0 ? '+' : '') + lr.slope.toFixed(1) + ' pts/day)';
+    }
+
+    var rates = getHabits().map(function(h) {
+      return { name: h.name, r: habitRate(h.id, 14) };
+    }).filter(function(x) { return x.r != null; }).sort(function(a, b) { return a.r - b.r; });
+
+    var weakHtml = rates.slice(0, 5).map(function(x) {
+      return '<div class="arow"><div class="amain"><b>' + esc(x.name) + '</b></div>'
+        + '<div style="width:120px" class="progress"><i style="width:' + x.r + '%"></i></div>'
+        + '<span class="dim" style="width:40px;text-align:right">' + x.r + '%</span></div>';
+    }).join("") || '<div class="dim">Check off habits to see weakest habit analytics.</div>';
+
+    return '<div class="grid g2">'
+      + '<div class="card"><h3>Performance Overview</h3>'
+      + '<div class="metric"><label>14-day average</label><b class="gold">' + (avg14 == null ? "-" : avg14 + "%") + '</b></div>'
+      + '<div class="metric"><label>7-day average</label><b>' + (avg7 == null ? "-" : avg7 + "%") + '</b></div>'
+      + '<div class="metric"><label>Current streak (\u2265' + STREAK_MIN + '%)</label><b>' + st + ' day(s)</b></div>'
+      + '<div class="metric"><label>Total logged days</label><b>' + loggedDays + '</b></div></div>'
+      + '<div class="card"><h3>Trend Prediction</h3><div style="padding:8px 0">' + predText + '</div>'
+      + '<div class="dim">Calculated via least-squares linear regression over your last 21 logged days.</div></div>'
+      + '</div>'
+      + '<div class="grid g2">'
+      + '<div class="card"><h3>28-Day Pearson Correlations</h3>' + corrHtml + '</div>'
+      + '<div class="card"><h3>Weakest Habits (14 Days)</h3>' + weakHtml + '</div>'
+      + '</div>';
+  }
+
+  if (tab === "admin") {
+    var S = DB.settings;
+    var habitRows = getHabits().map(function(h, idx) {
+      return '<div class="arow"><div class="amain"><b>' + esc(h.name) + '</b><span>' + esc(h.group) + '</span></div>'
+        + '<div class="abtns"><button class="btn sm danger" onclick="removeHabit(' + idx + ')">Remove</button></div></div>';
+    }).join("");
+
+    return '<div class="card"><h3>General &amp; Watch Settings</h3>'
+      + '<div class="metric"><label>Daily Water Goal (ml)</label><input type="number" min="500" step="100" value="' + S.waterGoal + '" onchange="setSetting(\'waterGoal\', this.value)"></div>'
+      + '<div class="metric"><label>Watch Step Goal (steps)</label><input type="number" min="1000" step="500" value="' + (S.stepGoal || 8000) + '" onchange="setSetting(\'stepGoal\', this.value)"></div>'
+      + '<div class="metric"><label>Hydration Reminder Interval (min)</label><input type="number" min="15" step="5" value="' + S.reminderMin + '" onchange="setSetting(\'reminderMin\', this.value)"></div>'
+      + '</div>'
+      + '<div class="card"><h3>Customize Habits (' + getHabits().length + ')</h3>'
+      + '<div style="margin-bottom:10px;display:flex;gap:8px;flex-wrap:wrap">'
+      + '<button class="btn goldbtn" onclick="openAddHabitModal()">+ Add Custom Habit</button>'
+      + '<button class="btn ghost" onclick="resetDefaultHabits()">Restore Default Habits</button>'
+      + '</div>'
+      + habitRows + '</div>';
+  }
+
+  if (tab === "data") {
+    var bytes = JSON.stringify(DB).length;
+    var daysCount = Object.keys(DB.logs).length;
+    return '<div class="card"><h3>Local Storage & Backup</h3>'
+      + '<div class="grid g3" style="margin-bottom:12px">'
+      + '<div><div class="big">' + daysCount + '</div><div class="dim">logged days</div></div>'
+      + '<div><div class="big">' + (bytes / 1024).toFixed(1) + ' KB</div><div class="dim">storage footprint</div></div>'
+      + '<div><div class="big">Local</div><div class="dim">100% offline browser storage</div></div>'
+      + '</div>'
+      + '<div class="arow"><div class="amain"><b>Export JSON Backup</b><span>Download your entire history and settings as a .json file.</span></div><button class="btn goldbtn" onclick="exportJSON()">Export Backup</button></div>'
+      + '<div class="arow"><div class="amain"><b>Import JSON Backup</b><span>Restore from a previously exported .json file.</span></div><label class="btn" style="cursor:pointer">Choose File<input type="file" accept=".json,application/json" style="display:none" onchange="importFile(this)"></label></div>'
+      + '<div class="arow"><div class="amain"><b>Weekly Printable Report</b><span>Generate a Mon–Sun table view ready for printing or saving as PDF.</span></div><button class="btn" onclick="weeklyReport()">Generate Report</button></div>'
+      + '</div>';
+  }
+
+  // Dashboard default view includes Watch 4 Classic Biometrics Banner
+  return renderWatchBanner(log)
+    + '<div class="card"><h3>Next Up on Your Schedule</h3>' + nextRows(3) + '</div>'
+    + '<div class="grid g2">'
+    + '<div class="card"><h3>Last 14 Days — Completion</h3>' + bars14() + '</div>'
+    + '<div class="card"><h3>35-Day Consistency Heatmap</h3>' + heat35() + '</div>'
+    + '</div>';
+}
+
+function render() {
+  var log = getLog(checkDate);
+  var habits = getHabits();
+  var waterGoal = (DB.settings && DB.settings.waterGoal) || 3000;
+
+  document.getElementById("hdDate").textContent = new Date().toLocaleDateString(undefined, {
+    weekday: "short",
+    day: "numeric",
+    month: "short"
+  });
+
+  var streak = currentStreak();
+  document.getElementById("hdStreak").textContent = streak > 0
+    ? "\u25C6 " + streak + "-day streak"
+    : "\u25C6 start today";
+
+  var w = log.watch || {};
+  var watchPill = document.getElementById("hdWatchStatus");
+  if (watchPill) {
+    watchPill.textContent = w.steps != null
+      ? "\u231A Watch 4: " + w.steps.toLocaleString() + " steps"
+      : "\u231A Watch 4 Classic (EEPD)";
+  }
+
+  var picker = document.getElementById("datePicker");
+  picker.value = checkDate;
+  picker.max = todayStr();
+  document.getElementById("dateStatus").textContent = checkDate === todayStr()
+    ? "Viewing Today"
+    : "Viewing Past Log (" + checkDate + ")";
+
+  var doneCount = 0;
+  for (var i = 0; i < habits.length; i++) {
+    if (log.tasks[habits[i].id]) doneCount++;
+  }
+  var total = habits.length;
+  var pct = total ? Math.round((doneCount / total) * 100) : 0;
+
+  var circumference = 2 * Math.PI * 52;
+  var offset = circumference * (1 - pct / 100);
+  document.getElementById("ringCircle").setAttribute("stroke-dasharray", String(circumference));
+  document.getElementById("ringCircle").setAttribute("stroke-dashoffset", String(offset));
+
+  document.getElementById("pctText").textContent = pct + "%";
+  document.getElementById("countText").textContent = doneCount + " / " + total + " habits";
+  document.getElementById("progBar").style.width = pct + "%";
+
+  var water = log.water || 0;
+  var waterPct = Math.min(100, Math.round((water / waterGoal) * 100));
+  document.getElementById("waterText").textContent = water;
+  document.getElementById("waterGoalLabel").textContent = "/ " + waterGoal + " ml";
+  document.getElementById("waterPctText").textContent = waterPct + "%";
+  document.getElementById("waterBar").style.width = waterPct + "%";
+
+  var msLeft = Math.max(0, (DB.settings.reminderMin || 60) * 60000 - (Date.now() - (DB.settings.lastWaterAt || Date.now())));
+  var remEl = document.getElementById("remCount");
+  if (remEl) remEl.textContent = Math.ceil(msLeft / 60000) + " min";
+
+  var woDay = log.workoutDay || scheduleDay(checkDate);
+  var wo = WORKOUTS[woDay];
+  var exDoneCount = 0;
+  if (wo) {
+    for (var k = 0; k < wo.exercises.length; k++) {
+      var st = log.exercises[wo.exercises[k].id];
+      if (st && st.done) exDoneCount++;
+    }
+  }
+  document.getElementById("dashWoDay").textContent = "Day " + woDay;
+  document.getElementById("dashWoLabel").textContent = wo ? wo.label : "";
+  document.getElementById("dashWoProgress").textContent = wo
+    ? exDoneCount + " / " + wo.exercises.length + " exercises completed"
+    : "";
+
+  document.getElementById("tabView").innerHTML = renderTabContent(log);
+
+  var html = "";
+  for (var g = 0; g < GROUPS.length; g++) {
+    var groupName = GROUPS[g];
+    var groupHabits = habits.filter(function(h) { return h.group === groupName; });
+    if (!groupHabits.length) continue;
+    var groupDone = groupHabits.filter(function(h) { return log.tasks[h.id]; }).length;
+
+    html += '<div class="ghead"><b>' + esc(groupName) + '</b><span class="dim">' + groupDone + '/' + groupHabits.length + '</span></div>';
+
+    for (var j = 0; j < groupHabits.length; j++) {
+      var h = groupHabits[j];
+      var isDone = !!log.tasks[h.id];
+      html += '<label class="task ' + (isDone ? 'done' : '') + '">'
+        + '<input type="checkbox" ' + (isDone ? 'checked' : '') + ' onchange="toggleHabit(\'' + h.id + '\', this.checked)">'
+        + '<span class="tl">' + esc(h.name) + '</span>'
+        + '</label>';
+    }
+  }
+  document.getElementById("habitList").innerHTML = html;
+}
+
+buildTabs();
+go("dashboard");
+</script>
+</body>
+</html>
